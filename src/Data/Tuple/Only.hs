@@ -1,14 +1,18 @@
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveFoldable     #-}
 {-# LANGUAGE DeriveFunctor      #-}
 {-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DeriveTraversable  #-}
 {-# LANGUAGE Safe               #-}
 
 module Data.Tuple.Only where
 
-import           Control.DeepSeq (NFData (rnf))
-import           Data.Data       (Data)
-import           Data.Typeable   (Typeable)
-import           GHC.Generics    (Generic)
+import           Control.DeepSeq  (NFData (rnf))
+import           Data.Data        (Data)
+import           Data.Foldable    (Foldable (..))
+import           Data.Traversable (Traversable (..))
+import           Data.Typeable    (Typeable)
+import           GHC.Generics     (Generic)
 
 -- | The 1-tuple type or single-value "collection".
 --
@@ -27,7 +31,7 @@ import           GHC.Generics    (Generic)
 --forM_ xs $ \\('Only' id) -> {- ... -}@
 --
 newtype Only a = Only { fromOnly :: a }
-               deriving (Eq, Ord, Read, Show, Generic, Functor, Data, Typeable)
+               deriving (Eq, Ord, Read, Show, Generic, Functor, Foldable, Traversable, Data, Typeable)
 
 instance NFData a => NFData (Only a) where
     rnf = rnf . fromOnly
