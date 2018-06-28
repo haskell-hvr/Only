@@ -1,6 +1,8 @@
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveFoldable     #-}
 {-# LANGUAGE DeriveFunctor      #-}
 {-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DeriveTraversable  #-}
 {-# LANGUAGE Safe               #-}
 
 module Data.Tuple.Only where
@@ -27,7 +29,7 @@ import           GHC.Generics    (Generic)
 --forM_ xs $ \\('Only' id) -> {- ... -}@
 --
 newtype Only a = Only { fromOnly :: a }
-               deriving (Eq, Ord, Read, Show, Generic, Functor, Data, Typeable)
+               deriving (Eq, Ord, Read, Show, Generic, Functor, Foldable, Traversable, Data, Typeable)
 
 instance NFData a => NFData (Only a) where
     rnf = rnf . fromOnly
